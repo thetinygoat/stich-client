@@ -1,12 +1,15 @@
 import React, { Fragment, useState } from "react";
+import { useDispatch } from "react-redux";
+import { Player } from "../store/actions";
+import * as actions from "../store/actions/actions";
 import format from "date-fns/format";
 import styled from "styled-components";
 const PodcastContainer = styled.div`
 	color: #f7f7f7;
-	margin-left: 20vw;
+	margin-left: 2vw;
 	padding: 1em;
 	display: flex;
-	justify-content: space-around;
+	justify-content: space-between;
 `;
 
 const ArtWork = styled.img`
@@ -17,14 +20,14 @@ const ArtworkContainer = styled.div`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	width: 25%;
+	text-align: center;
 `;
 
 const EpisodesContainer = styled.div`
-	width: 60%;
 	margin-bottom: 10em;
 `;
 const EpisodeContainer = styled.div`
+	margin-left: 3em;
 	padding: 0.7em;
 	transition: 0.25s
 	cursor: pointer
@@ -65,18 +68,30 @@ const Subsribe = styled.button`
 const Podcast = ({ data }) => {
 	const podcast = data.data ? data.data : {};
 	const episodes = podcast.episodes || [];
-	console.log(podcast.episodes);
+	const dispatch = useDispatch();
 	return (
 		<PodcastContainer>
 			<ArtworkContainer>
 				<ArtWork src={podcast.image} />
-				<h1>{podcast.title}</h1>
+				<h2>{podcast.title}</h2>
 				<Subsribe>Subscribe</Subsribe>
 			</ArtworkContainer>
 			<EpisodesContainer>
 				{episodes.map(episode => {
 					return (
-						<EpisodeContainer key={episode.id}>
+						<EpisodeContainer
+							key={episode.id}
+							onClick={() => {
+								dispatch(
+									Player.startPodcast({
+										thumbnail: podcast.thumbnail,
+										audio: episode.audio,
+										title: episode.title,
+										podcastTitle: podcast.title
+									})
+								);
+							}}
+						>
 							<Meta>{format(new Date(episode.pub_date_ms), "ddd MMM DD")}</Meta>
 							<Episode>
 								<I className="material-icons">play_circle_outline</I>

@@ -1,3 +1,4 @@
 import Home from "./home";
 import Podcast from "./podcast";
-export { Home, Podcast };
+import Search from "./search";
+export { Home, Podcast, Search };
