@@ -12,7 +12,7 @@ function App() {
 		<Container>
 			<Sidebar />
 			<Switch>
-				<Route exact path="/" component={Search} />
+				<Route exact path="/" component={Home} />
 				<Route path="/search" component={Search} />
 				<Route exact path="/podcasts/:id" component={Podcast} />
 			</Switch>

@@ -10,4 +10,9 @@ const GetPodcastById = async id => {
 	return { data: response.data };
 };
 
-export { Search, GetPodcastById };
+const getBestPodcasts = async id => {
+	const response = await axios.get(`/podcasts/best?id=${id}`);
+	return { data: response.data };
+};
+
+export { Search, GetPodcastById, getBestPodcasts };
